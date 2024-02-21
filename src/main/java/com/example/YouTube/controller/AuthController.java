@@ -1,15 +1,33 @@
 package com.example.YouTube.controller;
 
+import com.example.YouTube.dto.AuthDTO;
+import com.example.YouTube.dto.CreateProfileDTO;
 import com.example.YouTube.dto.ProfileDTO;
 import com.example.YouTube.entity.ProfileEntity;
+import com.example.YouTube.service.AuthService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+@Slf4j
 @RestController
 @RequestMapping( "/auth")
 public class AuthController {
+    @Autowired
+    private AuthService authService;
+
+    @PostMapping("/login")
+    public ResponseEntity<ProfileDTO>login(@RequestBody AuthDTO authDTO){
+        return ResponseEntity.ok(authService.login(authDTO));
+    }
+    @PostMapping("/registration")
+    public ResponseEntity<Boolean> registrationEmail(@RequestBody CreateProfileDTO dto) {
+        return ResponseEntity.ok(authService.registration(dto));
+    }
+    @GetMapping("/verification/email/{jwt}")
+    public ResponseEntity<String> emailVerification(@PathVariable("jwt") String jwt) {
+        log.warn("registration {}", jwt);
+        return ResponseEntity.ok(authService.emailVerification(jwt));
+    }
 
 }

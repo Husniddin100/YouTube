@@ -49,6 +49,9 @@ public class SpringSecurityConfig {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers(AUTH_WHITELIST).permitAll()
                     .requestMatchers("/profile/adm", "/profile/adm/*").hasRole("ADMIN")
+                    .requestMatchers("auth/registration").permitAll()
+                    .requestMatchers("auth/verification/email/*").permitAll()
+                    .requestMatchers("auth/login").permitAll()
                     .anyRequest()
                     .authenticated();
         });

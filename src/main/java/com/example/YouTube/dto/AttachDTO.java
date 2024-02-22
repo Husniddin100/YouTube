@@ -12,5 +12,6 @@ public class AttachDTO {
     private String type;
     private String path;
     private String duration;
+    // attach
 
 }

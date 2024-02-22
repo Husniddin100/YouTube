@@ -14,7 +14,6 @@ import com.example.YouTube.util.MDUtil;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -28,7 +27,7 @@ public class AuthService {
                 MDUtil.encode(profile.getPassword()));
 
         if (optional.isEmpty()) {
-            throw new AppBadException("email or password.wrong");
+            throw new AppBadException("email or password wrong");
         }
 
         ProfileEntity entity = optional.get();
@@ -36,7 +35,7 @@ public class AuthService {
         ProfileDTO dto = new ProfileDTO();
 
         if (entity.getVisible().equals(false)) {
-            throw new AppBadException("Account.not.found");
+            throw new AppBadException("Account not found");
         }
 
         dto.setName(entity.getName());
@@ -63,7 +62,7 @@ public class AuthService {
         entity.setStatus(ProfileStatus.REGISTRATION);
         entity.setRole(ProfileRole.ROLE_USER);
         profileRepository.save(entity);
-        String jwt = JWTUtil.encodeForEmail(entity.getId());
+        String jwt = JWTUtil.encode(entity.getEmail(),entity.getRole());
         String text = "Hello. \n To complete registration please link to the following link\n"
                 + "http://localhost:8081/auth/verification/email/" + jwt;
         mailSenderService.sendEmail(dto.getEmail(), "Complete registration", text);
@@ -71,8 +70,8 @@ public class AuthService {
     }
     public String emailVerification(String jwt) {
         try {
-            JwtDTO jwtDTO = JWTUtil.decode(jwt);
-            Optional<ProfileEntity> optional = profileRepository.findById(jwtDTO.getId());
+            JwtDTO jwtDTO = JWTUtil.decodeForSpringSecurity(jwt);
+            Optional<ProfileEntity> optional = profileRepository.findByEmail(jwtDTO.getEmail());
             if (!optional.isPresent()) {
                 throw new AppBadException("Profile not found");
             }

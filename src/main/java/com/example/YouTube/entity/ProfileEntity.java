@@ -21,6 +21,7 @@ public class ProfileEntity extends BaseEntity{
     private String email;
     @Column(nullable = false)
     private String password;
+    /// attach join column see soon
     @Column(name = "photo_id")
     private String photoId;
     @Enumerated(EnumType.STRING)
@@ -29,5 +30,4 @@ public class ProfileEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ProfileStatus status;
-
 }

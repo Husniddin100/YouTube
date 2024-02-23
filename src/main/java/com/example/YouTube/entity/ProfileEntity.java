@@ -24,6 +24,9 @@ public class ProfileEntity extends BaseEntity{
     /// attach join column see soon
     @Column(name = "photo_id")
     private String photoId;
+    @OneToOne
+    @JoinColumn(name = "photo_id", insertable = false, updatable = false)
+    private AttachEntity photo;
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private ProfileRole role;

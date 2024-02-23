@@ -16,6 +16,6 @@ Content-Type:application/json
 Accept-Language: uz
 
 {
-  "email": "jamol3904@gmail.com",
+  "email": "admin@gmail.com",
   "password": "1234"
 }

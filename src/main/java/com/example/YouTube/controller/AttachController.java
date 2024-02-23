@@ -20,4 +20,8 @@ public class AttachController {
         AttachDTO fileName = attachService.save(file);
         return ResponseEntity.ok().body(fileName);
     }
+    @GetMapping(value = "/open/{fileName}", produces = MediaType.ALL_VALUE)
+    public byte[] open(@PathVariable("fileName") String fileName) {
+        return attachService.open(fileName);
+    }
 }

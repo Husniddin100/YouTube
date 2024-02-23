@@ -82,5 +82,26 @@ public class AttachService {
             throw new AppBadException("file upload");
         }
     }
+    private AttachEntity getAttach(String fileName) {
+        String id = fileName.split("\\.")[0];
+        Optional<AttachEntity> optional = attachRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new AppBadException("File Not Found");
+        }
+        return optional.get();
+    }
+
+    public byte[] open(String fileName) {
+        try {
+            AttachEntity entity = getAttach(fileName);
+
+            Path file = Paths.get(attachUploadFolder + entity.getPath() + "/" + fileName);
+            return Files.readAllBytes(file);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 }

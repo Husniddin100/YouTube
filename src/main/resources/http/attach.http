@@ -8,3 +8,8 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="test.mp4"
 
 < C:\test.mp4
+
+### open
+GET http://localhost:8081/attach/open/ef078768-7bc6-4bbb-8f80-1fe8b7298ec4.mp4
+
+

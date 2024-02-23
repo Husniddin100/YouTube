@@ -1,0 +1,10 @@
+### Upload file
+POST http://localhost:8081/attach/upload
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg2NzUxMDIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDg3NjE1MDIsImlzcyI6IllvdVR1YmUifQ.HWkGR7e0N5qJqI3-hi46vOFPCBOouszpBo5i59dZXjS7jo04zveS2XQjxYUodilhfjqPxI3IVuBKe_pJvOXwUA
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="test.mp4"
+
+< C:\test.mp4

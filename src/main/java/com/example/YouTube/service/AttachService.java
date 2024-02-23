@@ -103,5 +103,27 @@ public class AttachService {
         }
 
     }
+    public Resource download(String fileName) {
+        try {
+            AttachEntity entity = getAttach(fileName);
+
+
+            File file = new File(attachUploadFolder + entity.getPath() + "/" + fileName);
+
+            File dir = file.getParentFile();
+            File rFile = new File(dir, entity.getOriginName());
+
+            Resource resource = new UrlResource(rFile.toURI());
+
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new AppBadException("could not read");
+            }
+        } catch (MalformedURLException e) {
+            throw new AppBadException("smth wrong");
+        }
+    }
+
 
 }

@@ -12,4 +12,6 @@ Content-Disposition: form-data; name="file"; filename="test.mp4"
 ### open
 GET http://localhost:8081/attach/open/ef078768-7bc6-4bbb-8f80-1fe8b7298ec4.mp4
 
+### download
+GET localhost:8081/attach/download/ef078768-7bc6-4bbb-8f80-1fe8b7298ec4.mp4
 

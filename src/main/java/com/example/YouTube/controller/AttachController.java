@@ -3,6 +3,8 @@ package com.example.YouTube.controller;
 import com.example.YouTube.dto.AttachDTO;
 import com.example.YouTube.service.AttachService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,4 +26,11 @@ public class AttachController {
     public byte[] open(@PathVariable("fileName") String fileName) {
         return attachService.open(fileName);
     }
+    @GetMapping("/public/download/{fineName}")
+    public ResponseEntity<Resource> download(@PathVariable("fineName") String fileName) {
+        Resource file = attachService.download(fileName);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
 }

@@ -52,6 +52,7 @@ public class SpringSecurityConfig {
                     .requestMatchers("auth/registration").permitAll()
                     .requestMatchers("auth/verification/email/*").permitAll()
                     .requestMatchers("auth/login").permitAll()
+                    .requestMatchers("/attach/open/*").permitAll()
                     .anyRequest()
                     .authenticated();
         });

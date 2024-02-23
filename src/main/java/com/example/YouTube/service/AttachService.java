@@ -82,5 +82,48 @@ public class AttachService {
             throw new AppBadException("file upload");
         }
     }
+    private AttachEntity getAttach(String fileName) {
+        String id = fileName.split("\\.")[0];
+        Optional<AttachEntity> optional = attachRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new AppBadException("File Not Found");
+        }
+        return optional.get();
+    }
+
+    public byte[] open(String fileName) {
+        try {
+            AttachEntity entity = getAttach(fileName);
+
+            Path file = Paths.get(attachUploadFolder + entity.getPath() + "/" + fileName);
+            return Files.readAllBytes(file);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public Resource download(String fileName) {
+        try {
+            AttachEntity entity = getAttach(fileName);
+
+
+            File file = new File(attachUploadFolder + entity.getPath() + "/" + fileName);
+
+            File dir = file.getParentFile();
+            File rFile = new File(dir, entity.getOriginName());
+
+            Resource resource = new UrlResource(rFile.toURI());
+
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new AppBadException("could not read");
+            }
+        } catch (MalformedURLException e) {
+            throw new AppBadException("smth wrong");
+        }
+    }
+
 
 }

@@ -26,6 +26,7 @@ public class AttachController {
     public byte[] open(@PathVariable("fileName") String fileName) {
         return attachService.open(fileName);
     }
+
     @GetMapping("/public/download/{fineName}")
     public ResponseEntity<Resource> download(@PathVariable("fineName") String fileName) {
         Resource file = attachService.download(fileName);

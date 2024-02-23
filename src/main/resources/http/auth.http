@@ -1,6 +1,7 @@
 ### registration for email
 POST localhost:8081/auth/registration
 Content-Type: application/json
+Accept-Language: uz
 
 {
   "name": "Ali",
@@ -12,6 +13,7 @@ Content-Type: application/json
 ### login
 POST localhost:8081/auth/login
 Content-Type:application/json
+Accept-Language: uz
 
 {
   "email": "jamol3904@gmail.com",

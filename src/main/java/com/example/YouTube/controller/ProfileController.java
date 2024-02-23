@@ -22,4 +22,12 @@ public class ProfileController {
 
         return ResponseEntity .ok(profileService.change_password(dto,languageEnums));
     }
+    @GetMapping("/verification/emailChange/{jwt}")
+    public void verificationEmailChange(@PathVariable("jwt") String jwt,@RequestHeader LanguageEnums languageEnums){
+        profileService.verificationChange(jwt,languageEnums);
+    }
+    @PostMapping("/update")
+    public ResponseEntity<Boolean>update(@RequestParam(value = "name") String name,@RequestParam("surname")String surname){
+        return ResponseEntity.ok(true);
+    }
 }

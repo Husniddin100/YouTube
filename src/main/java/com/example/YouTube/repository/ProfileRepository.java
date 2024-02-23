@@ -19,5 +19,9 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity, Integer
     void updateStatus(Integer id, ProfileStatus profileStatus);
 
     Optional<ProfileEntity> findByEmailAndPassword(String email, String encode);
+@Transactional
+@Modifying
+@Query("update ProfileEntity p set p.password=?2 where p.email=?1")
+    Boolean  updatePassword(String email,String newPassword);
 }
 

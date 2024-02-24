@@ -17,6 +17,8 @@ public class EmailSendHistoryEntity {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "new_email")
+    private String new_email;
     @Column(name = "visible")
     private Boolean visible=true;
     @Column(name = "createdDate")

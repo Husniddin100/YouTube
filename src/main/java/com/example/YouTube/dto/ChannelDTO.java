@@ -8,6 +8,7 @@ public class ChannelDTO {
     private String photoId;
     private String description;
     private ChannelStatus status;
-    private String banner;
+    private String bannerId;
     private Integer profileId;
+    private Integer subscriptionCount;
 }

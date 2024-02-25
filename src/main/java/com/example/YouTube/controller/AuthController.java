@@ -33,7 +33,6 @@ public class AuthController {
                                                      @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum language) {
         return ResponseEntity.ok(authService.registration(dto, language));
     }
-
     @GetMapping("/verification/email/{jwt}")
     public ResponseEntity<String> emailVerification(@PathVariable("jwt") String jwt,
                                                     @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum language) {

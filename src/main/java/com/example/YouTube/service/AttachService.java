@@ -56,10 +56,9 @@ public class AttachService {
             File folder = new File(attachUploadFolder + pathFolder); // attaches/2022/04/23
 
             if (!folder.exists()) folder.mkdirs();
-            String fileName = UUID.randomUUID().toString(); // dasdasd-dasdasda-asdasda-asdasd
-            String extension = getExtension(file.getOriginalFilename()); //zari.jpg
+            String fileName = UUID.randomUUID().toString();
+            String extension = getExtension(file.getOriginalFilename()); //test.jpg
 
-            // attaches/2022/04/23/dasdasd-dasdasda-asdasda-asdasd.jpg
             byte[] bytes = file.getBytes();
             Path path = Paths.get(attachUploadFolder + pathFolder + "/" + fileName + "." + extension);
             Files.write(path, bytes);
@@ -103,6 +102,7 @@ public class AttachService {
         }
 
     }
+    // not active
     public Resource download(String fileName) {
         try {
             AttachEntity entity = getAttach(fileName);
@@ -110,8 +110,8 @@ public class AttachService {
 
             File file = new File(attachUploadFolder + entity.getPath() + "/" + fileName);
 
-            File dir = file.getParentFile();
-            File rFile = new File(dir, entity.getOriginName());
+            File read = file.getParentFile();
+            File rFile = new File(read, entity.getOriginName());
 
             Resource resource = new UrlResource(rFile.toURI());
 
@@ -124,6 +124,41 @@ public class AttachService {
             throw new AppBadException("smth wrong");
         }
     }
+    public Page<AttachDTO> getWithPage(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<AttachEntity> pageObj = attachRepository.findAll(pageable);
+
+        List<AttachEntity> entityList = pageObj.getContent();
+        List<AttachDTO> dtoList = new ArrayList<>();
 
 
+        for (AttachEntity entity : entityList) {
+            AttachDTO dto = new AttachDTO();
+            dto.setId(entity.getId());
+            dto.setPath(entity.getPath());
+            dto.setType(entity.getType());
+            dto.setUrl(attachDownloadUrl + "/" + entity.getId() + "." + entity.getType());
+            dto.setOriginalName(entity.getOriginName());
+            dto.setSize(entity.getSize());
+            dto.setCreatedDate(entity.getCreatedDate());
+            dtoList.add(dto);
+        }
+        return new PageImpl<>(dtoList, pageable, pageObj.getTotalElements());
+    }
+    public String deleteById(String fileName) {
+        try {
+            AttachEntity entity = getAttach(fileName);
+            Path file = Paths.get(attachUploadFolder + entity.getPath() + "/" + fileName);
+
+            Files.delete(file);
+            attachRepository.deleteById(entity.getId());
+
+            return "deleted";
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

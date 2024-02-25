@@ -21,7 +21,6 @@ public class ProfileEntity extends BaseEntity{
     private String email;
     @Column(nullable = false)
     private String password;
-    /// attach join column see soon
     @Column(name = "photo_id")
     private String photoId;
     @OneToOne

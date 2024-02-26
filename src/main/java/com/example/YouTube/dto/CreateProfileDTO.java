@@ -1,6 +1,5 @@
 package com.example.YouTube.dto;
 
-import com.example.YouTube.enums.ProfileRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,5 +10,4 @@ public class CreateProfileDTO {
     private String surname;
     private String email;
     private String password;
-    private ProfileRole role;
 }

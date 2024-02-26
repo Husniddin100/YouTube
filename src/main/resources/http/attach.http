@@ -1,0 +1,21 @@
+### Upload file
+POST http://localhost:8081/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="photo.jpg"
+
+< C:\photo.jpg
+
+### open
+GET http://localhost:8081/attach/open/f30a45d8-cd00-4bc1-ae77-980eab3331af.mp4
+
+### download
+GET localhost:8081/attach/download/f30a45d8-cd00-4bc1-ae77-980eab3331af.mp4
+
+### Delete
+DELETE localhost:8081/attach/delete/ef078768-7bc6-4bbb-8f80-1fe8b7298ec4.mp4
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg4NDM4ODgsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDg5MzAyODgsImlzcyI6IllvdVR1YmUifQ.lrmGJPTswDz8zXG5A3_w_dS0zpMx6CgG4lZsVzN-TEyhFB591dVm63-e7gqaYKllFMyX35vK5_IZqnHDP5oLOw
+
+

@@ -1,6 +1,7 @@
 package com.example.YouTube.repository;
 
 import com.example.YouTube.entity.ProfileEntity;
+import com.example.YouTube.enums.ProfileRole;
 import com.example.YouTube.enums.ProfileStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,5 +33,7 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity, Integer
 @Modifying
 @Query("update ProfileEntity set email=?2 where email=?1")
     void updateEmail(String email, String newEmail);
+@Query("update ProfileEntity set role=?2 where email=?1")
+    Optional <ProfileEntity> updateRole(String email, ProfileRole role);
 }
 

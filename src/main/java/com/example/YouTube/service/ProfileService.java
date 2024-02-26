@@ -1,7 +1,9 @@
 package com.example.YouTube.service;
 
 import com.example.YouTube.dto.CreatProfileDto;
+import com.example.YouTube.dto.CreateProfileDTO;
 import com.example.YouTube.dto.JwtDTO;
+import com.example.YouTube.dto.ProfileDTO;
 import com.example.YouTube.entity.EmailSendHistoryEntity;
 import com.example.YouTube.entity.ProfileEntity;
 import com.example.YouTube.enums.LanguageEnums;
@@ -130,5 +132,29 @@ Optional<ProfileEntity>optional=profileRepository.findByEmailAndPassword(email,p
         resourceBundleService.getMessage("email.password.wrong",languageEnums);
         log.warn("Email or Password is wrong {}",email);
         throw new AppBadException("Email or Password is wrong");
+    }
+
+    public ProfileDTO create(CreateProfileDTO dto) {
+        ProfileEntity entity=new ProfileEntity();
+        Optional<ProfileEntity >optional=profileRepository.findByEmail(dto.getEmail());
+        if (optional.isEmpty()){
+            entity.setName(dto.getName());
+            entity.setSurname(dto.getSurname());
+            entity.setRole(dto.getRole());
+            entity.setEmail(dto.getEmail());
+            profileRepository.save(entity);
+            return toDTO(entity);
+        }
+       Optional<ProfileEntity>optionalProfile= profileRepository.updateRole(entity.getEmail(),entity.getRole());
+
+        return toDTO(optionalProfile.get());
+    }
+    public ProfileDTO toDTO(ProfileEntity entity){
+        ProfileDTO dto=new ProfileDTO();
+        dto.setJwt(JWTUtil.encode(entity.getId(),entity.getRole()));
+        dto.setName(entity.getName());
+        dto.setSurname(entity.getSurname());
+        dto.setRole(dto.getRole());
+        return dto;
     }
 }

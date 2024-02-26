@@ -1,6 +1,7 @@
 package com.example.YouTube.controller;
 
 import com.example.YouTube.dto.CreatProfileDto;
+import com.example.YouTube.dto.CreateProfileDTO;
 import com.example.YouTube.dto.JwtDTO;
 import com.example.YouTube.dto.ProfileDTO;
 import com.example.YouTube.enums.LanguageEnums;
@@ -45,4 +46,8 @@ public class ProfileController {
     public void emailChangeUpdateNewEmail(@PathVariable("jwt") String jwt,@RequestHeader LanguageEnums languageEnums){
         profileService.emailChangeUpdateNewEmail(jwt,languageEnums);
     }
+@PostMapping("/adm/create")
+    public ResponseEntity<ProfileDTO>create(@RequestBody CreateProfileDTO dto){
+        return ResponseEntity.ok(profileService.create(dto));
+}
 }

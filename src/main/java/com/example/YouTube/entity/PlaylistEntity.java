@@ -10,7 +10,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "playlist")
 public class PlaylistEntity extends BaseEntity{
- @OneToMany()
+ @ManyToOne()
  @JoinColumn(updatable = false,nullable = false)
    private  ChannelEntity channel;
  @Column(name = "channel_id")
@@ -19,8 +19,7 @@ public class PlaylistEntity extends BaseEntity{
     private  String name;
     @Column(name = "description")
     private  String description;
-    @OneToMany()
-    @JoinColumn(name = "status")
+    @Column(name = "status")
     private PlaylistStatus status;
     @Column(name = "order_num")
     private  Integer order_num;

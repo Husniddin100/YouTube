@@ -1,7 +1,7 @@
 package com.example.YouTube.controller;
 
 import com.example.YouTube.exp.AppBadException;
-import com.example.YouTube.exp.ForbiddenExeption;
+import com.example.YouTube.exp.ForbiddenException;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ public class ExceptionHandlerController {
     private ResponseEntity<?> handle(AppBadException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
-    @ExceptionHandler(ForbiddenExeption.class)
-    private ResponseEntity<?> handle(ForbiddenExeption e) {
+    @ExceptionHandler(ForbiddenException.class)
+    private ResponseEntity<?> handle(ForbiddenException e) {
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }

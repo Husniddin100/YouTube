@@ -39,8 +39,8 @@ public class ChannelService {
             throw new AppBadException("channel not found");
         }
         // check channel owner
-        Optional<ChannelEntity>checkOwner=channelRepository.findOwner(profileId,dto.getId());
-        if (optional.isEmpty()){
+        Optional<ChannelEntity>checkOwner=channelRepository.findOwner(profileId,id);
+        if (checkOwner.isEmpty()){
             throw new AppBadException("You are not the owner of the channel");
         }
         ChannelEntity entity=optional.get();

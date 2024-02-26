@@ -1,7 +1,11 @@
 package com.example.YouTube.dto;
 
 import com.example.YouTube.enums.ChannelStatus;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ChannelDTO {
     private String id;
     private String name;

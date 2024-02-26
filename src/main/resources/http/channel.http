@@ -1,0 +1,9 @@
+### create channel
+POST localhost:8081/channel/create
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg5MjY0OTIsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkwMTI4OTIsImlzcyI6IllvdVR1YmUifQ.p3m_postr3wLoUlUYWaS-7Q8R_aUVh_r11-702RZQ_DszDQ_LEj_KM6ssFFM3dnKGXY-Wrbo8Fy1_f-rIFiIlA
+Content-Type:application/json
+
+{
+  "name": "Games",
+
+}

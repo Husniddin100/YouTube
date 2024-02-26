@@ -5,6 +5,7 @@ import com.example.YouTube.dto.CreateProfileDTO;
 import com.example.YouTube.dto.JwtDTO;
 import com.example.YouTube.dto.ProfileDTO;
 import com.example.YouTube.entity.ProfileEntity;
+import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.enums.ProfileRole;
 import com.example.YouTube.enums.ProfileStatus;
 import com.example.YouTube.exp.AppBadException;
@@ -22,12 +23,14 @@ public class AuthService {
     private MailSenderService mailSenderService;
     @Autowired
     private ProfileRepository profileRepository;
-    public ProfileDTO login(AuthDTO profile) {
+    @Autowired
+    private ResourceBundleService resourceBundleService;
+    public ProfileDTO login(AuthDTO profile, LangEnum language) {
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndPassword(profile.getEmail(),
                 MDUtil.encode(profile.getPassword()));
 
         if (optional.isEmpty()) {
-            throw new AppBadException("email or password wrong");
+            throw new AppBadException(resourceBundleService.getMessage("email.password.wrong",language));
         }
 
         ProfileEntity entity = optional.get();
@@ -35,7 +38,7 @@ public class AuthService {
         ProfileDTO dto = new ProfileDTO();
 
         if (entity.getVisible().equals(false)) {
-            throw new AppBadException("Account not found");
+            throw new AppBadException(resourceBundleService.getMessage("Account.not.found", language));
         }
 
         dto.setName(entity.getName());
@@ -45,13 +48,13 @@ public class AuthService {
         return dto;
     }
 
-    public Boolean registration(CreateProfileDTO dto) {
+    public Boolean registration(CreateProfileDTO dto,LangEnum language) {
         Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
         if (optional.isPresent()) {
             if (optional.get().getStatus().equals(ProfileStatus.REGISTRATION)) {
                 profileRepository.delete(optional.get());
             } else {
-                throw new AppBadException("Email exists");
+                throw new AppBadException(resourceBundleService.getMessage("email.exists",language));
             }
         }
         ProfileEntity entity = new ProfileEntity();
@@ -68,20 +71,20 @@ public class AuthService {
         mailSenderService.sendEmail(dto.getEmail(), "Complete registration", text);
         return true;
     }
-    public String emailVerification(String jwt) {
+    public String emailVerification(String jwt,LangEnum language) {
         try {
             JwtDTO jwtDTO = JWTUtil.decodeForSpringSecurity(jwt);
             Optional<ProfileEntity> optional = profileRepository.findByEmail(jwtDTO.getEmail());
             if (!optional.isPresent()) {
-                throw new AppBadException("Profile not found");
+                throw new AppBadException(resourceBundleService.getMessage("account.not.found",language));
             }
             ProfileEntity entity = optional.get();
             if (!entity.getStatus().equals(ProfileStatus.REGISTRATION)) {
-                throw new AppBadException("Profile in wrong status");
+                throw new AppBadException(resourceBundleService.getMessage("profile.in.wrong.status",language));
             }
             profileRepository.updateStatus(entity.getId(), ProfileStatus.ACTIVE);
         } catch (JwtException e) {
-            throw new AppBadException("Please tyre again.");
+            throw new AppBadException(resourceBundleService.getMessage("please.tyre.again",language));
         }
         return null;
     }

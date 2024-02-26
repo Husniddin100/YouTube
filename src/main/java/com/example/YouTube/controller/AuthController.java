@@ -6,6 +6,7 @@ import com.example.YouTube.dto.AuthDTO;
 import com.example.YouTube.dto.CreateProfileDTO;
 import com.example.YouTube.dto.ProfileDTO;
 import com.example.YouTube.entity.ProfileEntity;
+import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.service.AuthService;
 import com.example.YouTube.util.SpringSecurityUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -21,17 +22,20 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<ProfileDTO> login(@RequestBody AuthDTO authDTO) {
-        return ResponseEntity.ok(authService.login(authDTO));
+    public ResponseEntity<ProfileDTO> login(@RequestBody AuthDTO authDTO
+            , @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum language) {
+        log.info("login {}", authDTO.getEmail());
+        return ResponseEntity.ok(authService.login(authDTO, language));
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Boolean> registrationEmail(@RequestBody CreateProfileDTO dto) {
-        return ResponseEntity.ok(authService.registration(dto));
+    public ResponseEntity<Boolean> registrationEmail(@RequestBody CreateProfileDTO dto,
+                                                     @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum language) {
+        return ResponseEntity.ok(authService.registration(dto, language));
     }
-
     @GetMapping("/verification/email/{jwt}")
-    public ResponseEntity<String> emailVerification(@PathVariable("jwt") String jwt) {
-        return ResponseEntity.ok(authService.emailVerification(jwt));
+    public ResponseEntity<String> emailVerification(@PathVariable("jwt") String jwt,
+                                                    @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum language) {
+        return ResponseEntity.ok(authService.emailVerification(jwt, language));
     }
 }

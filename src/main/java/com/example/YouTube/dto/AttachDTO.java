@@ -1,7 +1,10 @@
 package com.example.YouTube.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -11,7 +14,8 @@ public class AttachDTO {
     private Long size;
     private String type;
     private String path;
-    private String duration;
+    private Double duration;
+    private LocalDateTime createdDate;
+    private String url;
     // attach
-
 }

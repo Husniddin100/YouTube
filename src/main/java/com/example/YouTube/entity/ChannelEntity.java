@@ -16,7 +16,7 @@ public class ChannelEntity {
     @GenericGenerator(name = "generator_uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     @Column(name = "photo_id")

@@ -12,7 +12,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "channel")
 public class ChannelEntity {
     @Id
-    @GenericGenerator(name = "attach_uuid", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "generator_uuid")
+    @GenericGenerator(name = "generator_uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     @Column

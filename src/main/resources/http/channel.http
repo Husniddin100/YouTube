@@ -5,5 +5,19 @@ Content-Type:application/json
 
 {
   "name": "Games",
-
+  "photoId": "982e3c8c-7af9-428f-8040-c9a92af62768",
+  "description": "test",
+  "bannerId": "982e3c8c-7af9-428f-8040-c9a92af62768",
+  "profileId": 52
 }
+
+### update channel
+PUT localhost:8081/channel/update/191d4771-0dbb-43ae-ac9a-e9dd647a3f26
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg5MjY0OTIsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkwMTI4OTIsImlzcyI6IllvdVR1YmUifQ.p3m_postr3wLoUlUYWaS-7Q8R_aUVh_r11-702RZQ_DszDQ_LEj_KM6ssFFM3dnKGXY-Wrbo8Fy1_f-rIFiIlA
+Content-Type: application/json
+
+{
+  "name": "Game",
+  "description": "tests"
+}
+

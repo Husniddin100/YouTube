@@ -16,7 +16,7 @@ public class ChannelService {
     private ChannelRepository channelRepository;
 
     public ChannelDTO createChannel(ChannelDTO dto) {
-        Optional<ChannelEntity> optional = channelRepository.findById(String.valueOf(dto.getProfileId()));
+        Optional<ChannelEntity> optional = channelRepository.findId(dto.getProfileId());
         if (optional.isPresent()) {
             throw new AppBadException("you have already created a channel");
         }
@@ -33,4 +33,20 @@ public class ChannelService {
         return dto;
     }
 
+    public ChannelDTO update(String id, ChannelDTO dto, Integer profileId) {
+        Optional<ChannelEntity>optional=channelRepository.findById(id);
+        if (optional.isEmpty()){
+            throw new AppBadException("channel not found");
+        }
+        // check channel owner
+        Optional<ChannelEntity>checkOwner=channelRepository.findOwner(profileId,dto.getId());
+        if (optional.isEmpty()){
+            throw new AppBadException("You are not the owner of the channel");
+        }
+        ChannelEntity entity=optional.get();
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        channelRepository.save(entity);
+        return dto;
+    }
 }

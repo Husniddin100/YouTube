@@ -1,0 +1,12 @@
+###  Get email pagination (ADMIN)
+GET localhost:8081/email_history/getPagination?page=1&size=10
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkwMzAzMTcsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDkxMTY3MTcsImlzcyI6IllvdVR1YmUifQ.ceFVsQgUwPaa4pMjuBoTMwIw6ceu70I_QHsc4kK7AACu6nKq6lDUPY_bDfmlvj87LV2HzH0gQQYRfDEMvSHTsQ
+
+###  Get email pagination (ADMIN)
+POST localhost:8081/email_history/getByEmailPagination?page=1&size=10
+Content-Type: application/json
+
+{
+  "email": "uchanl10@gmail.com"
+}
+

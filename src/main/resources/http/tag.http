@@ -1,0 +1,22 @@
+### craete tag
+POST localhost:8081/tag/create
+Content-Type: application/json
+
+{
+  "name": "#ww1"
+}
+###update tag
+PUT localhost:8081/tag/update/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkwMjA2MDMsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDkxMDcwMDMsImlzcyI6IllvdVR1YmUifQ.YnuI-kOn9MNEI6ouuUgFDGSFxi8rUe2bTHzN8SnKTmeU5E605K4mhnOmDfys6xSXsFtmLvdDdqLQWDkajb7Kyw
+Content-Type: application/json
+
+{
+  "name": "#ww1"
+}
+
+### delete tag
+DELETE localhost:8081/tag/deleteTag/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkwMjA2MDMsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDkxMDcwMDMsImlzcyI6IllvdVR1YmUifQ.YnuI-kOn9MNEI6ouuUgFDGSFxi8rUe2bTHzN8SnKTmeU5E605K4mhnOmDfys6xSXsFtmLvdDdqLQWDkajb7Kyw
+
+### tag list
+GET localhost:8081/tag/tagList

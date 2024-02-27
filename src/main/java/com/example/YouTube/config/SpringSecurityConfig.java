@@ -57,6 +57,7 @@ public class SpringSecurityConfig {
                     .requestMatchers("attach/upload").permitAll()
                     .requestMatchers("tag/create").permitAll()
                     .requestMatchers("tag/tagList").permitAll()
+                    .requestMatchers("email_history/getByEmailPagination").permitAll()
                     .anyRequest()
                     .authenticated();
         });

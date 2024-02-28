@@ -161,4 +161,8 @@ public class AttachService {
             throw new RuntimeException(e);
         }
     }
+
+    public AttachDTO getURL(String previewAttachId) {
+        return getURL(previewAttachId);
+    }
 }

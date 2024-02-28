@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Setter
 public class CategoryDTO {
     private Integer id;
-    private String name;
+    private String categoryName;
     private LocalDateTime createdDate;
 
 }

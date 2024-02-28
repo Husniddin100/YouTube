@@ -19,7 +19,6 @@ public class CategoryController {
         CategoryDTO dtoList=categoryService.create(dto);
         return ResponseEntity.ok(dtoList);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<Boolean> updayteId(@PathVariable("id") Integer id,
                                              @RequestBody CategoryDTO dto){
@@ -37,8 +36,4 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAll());
     }
 
-
 }
-
-
-

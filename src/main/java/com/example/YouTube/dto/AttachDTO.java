@@ -17,5 +17,4 @@ public class AttachDTO {
     private Double duration;
     private LocalDateTime createdDate;
     private String url;
-    // attach
 }

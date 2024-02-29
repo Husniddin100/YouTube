@@ -1,0 +1,7 @@
+### create category
+POST localhost:8081/category/create
+Content-Type: application/json
+
+{
+  "categoryName": "test"
+}

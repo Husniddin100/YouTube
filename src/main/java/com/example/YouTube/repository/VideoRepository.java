@@ -13,12 +13,11 @@ import java.awt.print.Pageable;
 import java.util.List;
 
 public interface VideoRepository extends CrudRepository<VideoEntity,String>, PagingAndSortingRepository<VideoEntity,String> {
-
-    Page<VideoEntity> findByCategoryId(Pageable categoryId, boolean pageable);
+  /// bug
+  /*  Page<VideoEntity> findByCategoryId(Pageable categoryId, boolean pageable);
     Page<VideoShortInfoMapper> findByTagId(Long tagId, Pageable pageable);
-
-    Page<VideoShortInfoMapper> findByTitleContaining(String title, Pageable pageable);
-    @Query(value = "select v.id as videoId, v.title, v.preview_attach_id, v.published_date,  v.view_count," +
+    Page<VideoShortInfoMapper> findByTitleContaining(String title, Pageable pageable);*/
+   /* @Query(value = "select v.id as videoId, v.title, v.preview_attach_id, v.published_date,  v.view_count," +
             "       c.id as channelId, c.name as channelName, c.photo_id" +
             " from video as v " +
             "         inner join channel as c on c.id = v.channel_id " +
@@ -40,7 +39,10 @@ public interface VideoRepository extends CrudRepository<VideoEntity,String>, Pag
             "inner join channel as c on c.id = v.channel_id " +
             "inner join profile as p on p.id = c.profile_id " +
             " order by v.creted_date desc", nativeQuery = true)
-    Page<VideoShortInfoPaginationMapper> getVideoListForAdmin(Pageable pageable);
-    //  (VideShortInfo + owner (is,name,surname) + [playlist (id,name))]
+    Page<VideoShortInfoPaginationMapper> getVideoListForAdmin(Pageable pageable);*/
+
+
+
+  //  (VideShortInfo + owner (is,name,surname) + [playlist (id,name))]
 
 }

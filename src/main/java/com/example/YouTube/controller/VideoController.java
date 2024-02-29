@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class VideoController {
     @Autowired
     private VideoService videoService;
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<VideoDTO> create(@RequestBody VideoDTO dto){
         VideoDTO dtoList= videoService.create(dto);
         return ResponseEntity.ok(dtoList);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Boolean> updateById(@PathVariable("id") String id,
                                              @RequestBody VideoDTO dto){
 

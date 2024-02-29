@@ -48,6 +48,10 @@ public class VideoService {
     }
 
     public Boolean update(String id, VideoDTO dto) {
+        Optional<VideoEntity> optional = videoRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new AppBadException("video not found");
+        }
         VideoEntity entity = get(id);
         entity.setTitle(dto.getTitle());
         entity.setCreatedDate(LocalDateTime.now());
@@ -72,12 +76,12 @@ public class VideoService {
         }
     }
 
-    public PageImpl<VideoDTO> pagination(Integer page, Integer size) {
+  /*  public PageImpl pagination(Integer page, Integer size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
 
         Pageable pageable = (Pageable) PageRequest.of(page - 1, size, sort);
 
-        Page<VideoEntity> entityPage = videoRepository.findByCategoryId(pageable, true);
+        Page<VideoEntity> entityPage = videoRepository.findAll(pageable);
 //        Page<VideoShortInfo> findByCategoryId(Long categoryId, Pageable pageable);
         long totalElements = entityPage.getTotalElements();
 
@@ -86,37 +90,42 @@ public class VideoService {
             dtoList.add(toDTO(entity));
         }
 
-        return new PageImpl<>(dtoList, (org.springframework.data.domain.Pageable) pageable, totalElements);
+        return new PageImpl<>(dtoList, pageable, totalElements);
     }
+*/
     public VideoDTO toDTO(VideoEntity entity) {
         VideoDTO dto = new VideoDTO();
 
         dto.setId(entity.getId());
-       dto.setTitle(entity.getTitle());
-       dto.setCategoryId(entity.getCategoryId().getId());
-       dto.setAttachId(entity.getId());
-       dto.setCreatedDate(entity.getCreatedDate());
-       dto.setPublishedDate(entity.getPublishedDate());
-       dto.setTypeStatus(entity.getTypeStatus());
-       dto.setViewCount(entity.getViewCount());
-       dto.setShareCount(entity.getShareCount());
-       dto.setDescription(entity.getDescription());
+        dto.setTitle(entity.getTitle());
+        dto.setCategoryId(entity.getCategoryId().getId());
+        dto.setAttachId(entity.getId());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setPublishedDate(entity.getPublishedDate());
+        dto.setTypeStatus(entity.getTypeStatus());
+        dto.setViewCount(entity.getViewCount());
+        dto.setShareCount(entity.getShareCount());
+        dto.setDescription(entity.getDescription());
 
         return dto;
     }
+
     public VideoEntity get(String id) {
         return videoRepository.findById(id).orElseThrow(() -> {
             throw new AppBadException("Region not found");
         });
     }
-    public Page<VideoShortInfoMapper> searchVideosByTitle(String title, Pageable pageable) {
+
+   // incomplete method
+   /* public Page<VideoShortInfoMapper> searchVideosByTitle(String title, Pageable pageable) {
         return videoRepository.findByTitleContaining(title, pageable);
     }
+
     public Page<VideoShortInfoMapper> getVideosByTagIdWithPagination(Long tagId, Pageable pageable) {
         return videoRepository.findByTagId(tagId, pageable);
-    }
+    }*/
 
-     public PageImpl<VideoListPaginationDTO> getVideoListForAdmin(Integer page, Integer size, LangEnum language) {
+  /*  public PageImpl<VideoListPaginationDTO> getVideoListForAdmin(Integer page, Integer size, LangEnum language) {
         Pageable pageable = (Pageable) PageRequest.of(page - 1, size);
         Page<VideoShortInfoPaginationMapper> entityPage = videoRepository.getVideoListForAdmin(pageable);
 
@@ -148,37 +157,5 @@ public class VideoService {
             videoDTO.setPlayListJson(entity.getPlayListJson());
         }
         return new PageImpl<>(dtoList, (org.springframework.data.domain.Pageable) pageable, totalElements);
-    }
-
-/*
-    7. Video
-    1. Create Video (USER)
-    2. Update Video Detail (USER and OWNER)
-    3. Change Video Status (USER and OWNER)
-	(video_id,status)
-    4. Increase video_view Count by id
-    5. GqTitle
-        VideShortInfo
-    7. Get video by tag_id with pagination
-            VideShortInfo
-    8. Get Video By id (If Status PRIVATE allow only for OWNER or ADMIN)
-        VideFullInfo
-    9. Get Video List Pagination (ADMIN)
-        (VideShortInfo + owner (is,name,surname) + playlist (id,name))
-    10. Get Channel Video List Pagination (created_date desc)
-         VidePlayListInfo
-         example: https://www.youtube.com/channel/UCFoy0KOV9sihL61PJSh7x1g/videos
-
-    VideFullInfo (id,title,description,
-                preview_attach(id,url),attach(id,url,duration),
-                category(id,name),tagList(id,name),
-                published_date, channel(id,name,photo(url)),
-                view_count,shared_count,Like(like_count,dislike_count,
-                isUserLiked,IsUserDisliked),duration)
-    VideShortInfo(id,title, preview_attach(id,url),
-                   published_date, channel(id,name,photo(url)),
-                   view_count,duration)
-    VidePlayListInfo(id,title, preview_attach(id,url), view_count,
-                       published_date,duration)*/
-
+    }*/
 }

@@ -17,22 +17,19 @@ import java.util.Optional;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
-/*3. Category
-    1. Create Category (ADMIN)
-    2. Update Category (ADMIN)
-    3. Delete Category (ADMIN)
-    4. Category List*/
-
     public CategoryDTO create(CategoryDTO dto){
         CategoryEntity entity=new CategoryEntity();
         entity.setCategoryName(dto.getCategoryName());
         entity.setCreatedDate(LocalDateTime.now());
         categoryRepository.save(entity);
         dto.setId(entity.getId());
-
         return dto;
     }
     public Boolean update(Integer id, CategoryDTO dto){
+        Optional<CategoryEntity>optional=categoryRepository.findById(id);
+        if (optional.isEmpty()){
+            throw new AppBadException("category not found");
+        }
         CategoryEntity entity=get(id);
         entity.setCategoryName(dto.getCategoryName());
         entity.setCategoryName(dto.getCategoryName());

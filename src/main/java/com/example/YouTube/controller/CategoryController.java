@@ -14,24 +14,23 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("") //   /region
+    @PostMapping("/create")
     public ResponseEntity<CategoryDTO> create(@RequestBody CategoryDTO dto) {
         CategoryDTO dtoList=categoryService.create(dto);
         return ResponseEntity.ok(dtoList);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> updayteId(@PathVariable("id") Integer id,
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Boolean> updateById(@PathVariable("id") Integer id,
                                              @RequestBody CategoryDTO dto){
-
     return ResponseEntity.ok(categoryService.update(id,dto));
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id){
 
         return ResponseEntity.ok(categoryService.deleteId(id));
     }
-    @GetMapping("")
+    @GetMapping("getAll")
     public ResponseEntity<List<CategoryDTO>> getAll(){
 
         return ResponseEntity.ok(categoryService.getAll());

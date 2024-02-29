@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-/*
+
 @Getter
 @Setter
 @Entity
@@ -17,14 +17,13 @@ public class VideoTagEntity {
     @Column(name = "video_id")
     private String videoId;
     @ManyToOne
-    @JoinColumn(name = "video_id", insertable = false, updatable = false)
-   //join video entity
+    @JoinColumn(name = "video", insertable = false, updatable = false)
+    private VideoEntity video;
     @Column(name = "tag_id")
     private Integer tagId;
     @ManyToOne
-    @JoinColumn(name = "tag_id", insertable = false, updatable = false)
-    // join tag entity
+    @JoinColumn(insertable = false, updatable = false)
+    private TagEntity tag;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
-}*/
-//// soon
+}

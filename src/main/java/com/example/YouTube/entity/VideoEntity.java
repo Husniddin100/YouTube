@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
@@ -17,14 +18,18 @@ public class VideoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
-    @OneToOne
-    @JoinColumn(name = "category_id")
-    private CategoryEntity categoryId;
+    @Column
+    private Integer categoryId;
     @ManyToOne
-    @JoinColumn(name = "attach_id")
-    private AttachEntity attachId;
+    @JoinColumn(name = "category", updatable = false, insertable = false)
+    private CategoryEntity category;
+    @Column
+    private String attachId;
+    @OneToOne
+    @JoinColumn(name = "attach", insertable = false, updatable = false)
+    private AttachEntity attach;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
     @Column(name = "publishedDate")
@@ -39,14 +44,9 @@ public class VideoEntity {
     private Integer shareCount;
     @Column(name = "description")
     private String description;
+    @Column
+    private String channelId;
     @ManyToOne
-    @JoinColumn(name = "chanell_id")
+    @JoinColumn(name = "chanel", insertable = false, updatable = false)
     private ChannelEntity channel;
-    /*  private String previewAttachId;
-    private String title;
-    private Integer categoryId;
-    private String attachId;
-    private LocalDateTime createdDate;
-    private LocalDateTime publishedDate;
-    private VideoStatus status;*/
 }

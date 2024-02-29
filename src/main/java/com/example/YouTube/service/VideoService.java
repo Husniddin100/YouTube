@@ -76,30 +76,30 @@ public class VideoService {
         }
     }
 
-  /*  public PageImpl pagination(Integer page, Integer size) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
+    /*  public PageImpl pagination(Integer page, Integer size) {
+          Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
 
-        Pageable pageable = (Pageable) PageRequest.of(page - 1, size, sort);
+          Pageable pageable = (Pageable) PageRequest.of(page - 1, size, sort);
 
-        Page<VideoEntity> entityPage = videoRepository.findAll(pageable);
-//        Page<VideoShortInfo> findByCategoryId(Long categoryId, Pageable pageable);
-        long totalElements = entityPage.getTotalElements();
+          Page<VideoEntity> entityPage = videoRepository.findAll(pageable);
+  //        Page<VideoShortInfo> findByCategoryId(Long categoryId, Pageable pageable);
+          long totalElements = entityPage.getTotalElements();
 
-        List<VideoDTO> dtoList = new LinkedList<>();
-        for (VideoEntity entity : entityPage) {
-            dtoList.add(toDTO(entity));
-        }
+          List<VideoDTO> dtoList = new LinkedList<>();
+          for (VideoEntity entity : entityPage) {
+              dtoList.add(toDTO(entity));
+          }
 
-        return new PageImpl<>(dtoList, pageable, totalElements);
-    }
-*/
+          return new PageImpl<>(dtoList, pageable, totalElements);
+      }
+  */
     public VideoDTO toDTO(VideoEntity entity) {
         VideoDTO dto = new VideoDTO();
 
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
-        dto.setCategoryId(entity.getCategoryId().getId());
-        dto.setAttachId(entity.getId());
+        dto.setCategoryId(entity.getCategoryId());
+        dto.setAttachId(entity.getAttachId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setPublishedDate(entity.getPublishedDate());
         dto.setTypeStatus(entity.getTypeStatus());
@@ -116,7 +116,7 @@ public class VideoService {
         });
     }
 
-   // incomplete method
+    // incomplete method
    /* public Page<VideoShortInfoMapper> searchVideosByTitle(String title, Pageable pageable) {
         return videoRepository.findByTitleContaining(title, pageable);
     }

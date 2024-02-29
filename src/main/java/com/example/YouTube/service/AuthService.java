@@ -4,17 +4,21 @@ import com.example.YouTube.dto.AuthDTO;
 import com.example.YouTube.dto.CreateProfileDTO;
 import com.example.YouTube.dto.JwtDTO;
 import com.example.YouTube.dto.ProfileDTO;
+import com.example.YouTube.entity.EmailHistoryEntity;
 import com.example.YouTube.entity.ProfileEntity;
 import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.enums.ProfileRole;
 import com.example.YouTube.enums.ProfileStatus;
 import com.example.YouTube.exp.AppBadException;
+import com.example.YouTube.repository.EmailHistoryRepository;
 import com.example.YouTube.repository.ProfileRepository;
 import com.example.YouTube.util.JWTUtil;
 import com.example.YouTube.util.MDUtil;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -25,12 +29,15 @@ public class AuthService {
     private ProfileRepository profileRepository;
     @Autowired
     private ResourceBundleService resourceBundleService;
+    @Autowired
+    private EmailHistoryRepository emailHistoryRepository;
+
     public ProfileDTO login(AuthDTO profile, LangEnum language) {
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndPassword(profile.getEmail(),
                 MDUtil.encode(profile.getPassword()));
 
         if (optional.isEmpty()) {
-            throw new AppBadException(resourceBundleService.getMessage("email.password.wrong",language));
+            throw new AppBadException(resourceBundleService.getMessage("email.password.wrong", language));
         }
 
         ProfileEntity entity = optional.get();
@@ -48,13 +55,13 @@ public class AuthService {
         return dto;
     }
 
-    public Boolean registration(CreateProfileDTO dto,LangEnum language) {
+    public Boolean registration(CreateProfileDTO dto, LangEnum language) {
         Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
         if (optional.isPresent()) {
             if (optional.get().getStatus().equals(ProfileStatus.REGISTRATION)) {
                 profileRepository.delete(optional.get());
             } else {
-                throw new AppBadException(resourceBundleService.getMessage("email.exists",language));
+                throw new AppBadException(resourceBundleService.getMessage("email.exists", language));
             }
         }
         ProfileEntity entity = new ProfileEntity();
@@ -65,26 +72,32 @@ public class AuthService {
         entity.setStatus(ProfileStatus.REGISTRATION);
         entity.setRole(ProfileRole.ROLE_USER);
         profileRepository.save(entity);
-        String jwt = JWTUtil.encode(entity.getEmail(),entity.getRole());
+        String jwt = JWTUtil.encode(entity.getEmail(), entity.getRole());
         String text = "Hello. \n To complete registration please link to the following link\n"
                 + "http://localhost:8081/auth/verification/email/" + jwt;
         mailSenderService.sendEmail(dto.getEmail(), "Complete registration", text);
+        EmailHistoryEntity emailHistoryEntity = new EmailHistoryEntity();
+        emailHistoryEntity.setToEmail(dto.getEmail());
+        emailHistoryEntity.setMessage(text);
+        emailHistoryEntity.setCreatedDate(LocalDateTime.now());
+        emailHistoryRepository.save(emailHistoryEntity);
         return true;
     }
-    public String emailVerification(String jwt,LangEnum language) {
+
+    public String emailVerification(String jwt, LangEnum language) {
         try {
             JwtDTO jwtDTO = JWTUtil.decodeForSpringSecurity(jwt);
             Optional<ProfileEntity> optional = profileRepository.findByEmail(jwtDTO.getEmail());
             if (!optional.isPresent()) {
-                throw new AppBadException(resourceBundleService.getMessage("account.not.found",language));
+                throw new AppBadException(resourceBundleService.getMessage("account.not.found", language));
             }
             ProfileEntity entity = optional.get();
             if (!entity.getStatus().equals(ProfileStatus.REGISTRATION)) {
-                throw new AppBadException(resourceBundleService.getMessage("profile.in.wrong.status",language));
+                throw new AppBadException(resourceBundleService.getMessage("profile.in.wrong.status", language));
             }
             profileRepository.updateStatus(entity.getId(), ProfileStatus.ACTIVE);
         } catch (JwtException e) {
-            throw new AppBadException(resourceBundleService.getMessage("please.tyre.again",language));
+            throw new AppBadException(resourceBundleService.getMessage("please.tyre.again", language));
         }
         return null;
     }

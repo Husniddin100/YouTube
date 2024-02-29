@@ -17,7 +17,7 @@ public class VideoTagEntity {
     @Column(name = "video_id")
     private String videoId;
     @ManyToOne
-    @JoinColumn(name = "video", insertable = false, updatable = false)
+    @JoinColumn(insertable = false, updatable = false)
     private VideoEntity video;
     @Column(name = "tag_id")
     private Integer tagId;

@@ -1,0 +1,22 @@
+### create video tag
+POST localhost:8081/video_tag/addTag
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkxOTQ4NTcsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkyODEyNTcsImlzcyI6IllvdVR1YmUifQ.MKPIZ0D_Oe3j3JRtppO2KJ3_GmbEPtmMBFzkKeZxFw0OktHGMYthVPhcc_pog-rcfEjdvCJBGF8U8dVCitLXiw
+
+{
+  "videoId": "1c3a5bf9-4278-4748-abd3-2aee91ec292f",
+  "tagId": 4
+}
+
+### delete tag
+POST localhost:8081/video_tag/delete
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkxOTQ4NTcsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkyODEyNTcsImlzcyI6IllvdVR1YmUifQ.MKPIZ0D_Oe3j3JRtppO2KJ3_GmbEPtmMBFzkKeZxFw0OktHGMYthVPhcc_pog-rcfEjdvCJBGF8U8dVCitLXiw
+Content-Type: application/json
+
+{
+  "tagId": 1,
+  "videoId": "1c3a5bf9-4278-4748-abd3-2aee91ec292f"
+}
+
+### get tag list by videoId
+GET localhost:8081/video_tag/getList/1c3a5bf9-4278-4748-abd3-2aee91ec292f

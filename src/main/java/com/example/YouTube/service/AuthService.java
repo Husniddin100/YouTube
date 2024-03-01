@@ -84,20 +84,20 @@ public class AuthService {
         return true;
     }
 
-    public String emailVerification(String jwt, LangEnum language) {
+    public String emailVerification(String jwt) {
         try {
             JwtDTO jwtDTO = JWTUtil.decodeForSpringSecurity(jwt);
             Optional<ProfileEntity> optional = profileRepository.findByEmail(jwtDTO.getEmail());
-            if (!optional.isPresent()) {
-                throw new AppBadException(resourceBundleService.getMessage("account.not.found", language));
+            if (optional.isEmpty()) {
+                throw new AppBadException("account.not.found");
             }
             ProfileEntity entity = optional.get();
             if (!entity.getStatus().equals(ProfileStatus.REGISTRATION)) {
-                throw new AppBadException(resourceBundleService.getMessage("profile.in.wrong.status", language));
+                throw new AppBadException("profile.in.wrong.status");
             }
             profileRepository.updateStatus(entity.getId(), ProfileStatus.ACTIVE);
         } catch (JwtException e) {
-            throw new AppBadException(resourceBundleService.getMessage("please.tyre.again", language));
+            throw new AppBadException("please.tyre.again");
         }
         return null;
     }

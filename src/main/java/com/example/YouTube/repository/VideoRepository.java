@@ -11,9 +11,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Optional;
 
-public interface VideoRepository extends CrudRepository<VideoEntity,String>, PagingAndSortingRepository<VideoEntity,String> {
-  /// bug
+public interface VideoRepository extends CrudRepository<VideoEntity, String>, PagingAndSortingRepository<VideoEntity, String> {
+    @Query("from VideoEntity where id=?1")
+    Optional<Boolean> findByVideoId(String videoId);
+    /// bug
   /*  Page<VideoEntity> findByCategoryId(Pageable categoryId, boolean pageable);
     Page<VideoShortInfoMapper> findByTagId(Long tagId, Pageable pageable);
     Page<VideoShortInfoMapper> findByTitleContaining(String title, Pageable pageable);*/
@@ -42,7 +45,6 @@ public interface VideoRepository extends CrudRepository<VideoEntity,String>, Pag
     Page<VideoShortInfoPaginationMapper> getVideoListForAdmin(Pageable pageable);*/
 
 
-
-  //  (VideShortInfo + owner (is,name,surname) + [playlist (id,name))]
+    //  (VideShortInfo + owner (is,name,surname) + [playlist (id,name))]
 
 }

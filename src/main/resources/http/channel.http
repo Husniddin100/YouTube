@@ -1,6 +1,6 @@
 ### create channel
 POST localhost:8081/channel/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg5MjY0OTIsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkwMTI4OTIsImlzcyI6IllvdVR1YmUifQ.p3m_postr3wLoUlUYWaS-7Q8R_aUVh_r11-702RZQ_DszDQ_LEj_KM6ssFFM3dnKGXY-Wrbo8Fy1_f-rIFiIlA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkyNzU2NTYsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkzNjIwNTYsImlzcyI6IllvdVR1YmUifQ.oTzhYHWshacVMWSRiLudUUS09cTqiglchhdXof2xFkCAlKzG_-ewrrrJLfC0TE3l7tBzv-nzJTznmYRqjbPlTA
 Content-Type:application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type:application/json
   "photoId": "982e3c8c-7af9-428f-8040-c9a92af62768",
   "description": "test",
   "bannerId": "982e3c8c-7af9-428f-8040-c9a92af62768",
-  "profileId": 52
+  "profileId": 5
 }
 
 ### update channel
@@ -35,9 +35,8 @@ GET localhost:8081/channel/getAllPagination?page=1&size=10
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg5MzIxMjgsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDkwMTg1MjgsImlzcyI6IllvdVR1YmUifQ.l2k-kf1qw-c83QyeX92vpJ1BNg5NX4psQWtUoJJegnAtPJRhxcEA5top8cHRoWQYgDr0oclR9sa0w9nbIudyIw
 
 ### get byId
-GET localhost:8081/channel/getById/191d4771-0dbb-43ae-ac9a-e9dd647a3f26
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg5MzIxMjgsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDkwMTg1MjgsImlzcyI6IllvdVR1YmUifQ.l2k-kf1qw-c83QyeX92vpJ1BNg5NX4psQWtUoJJegnAtPJRhxcEA5top8cHRoWQYgDr0oclR9sa0w9nbIudyIw
-
+GET localhost:8081/channel/getById/2fddcf56-af91-47a9-8c38-3ed21702f69e
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkyNzYxNzYsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDkzNjI1NzYsImlzcyI6IllvdVR1YmUifQ.WoBz-pegi_u-0aAwQBLvofAymcoEDj_imSTILckNXGQ4NUpaMMKD_eUqbiQBeuTsm7phOvasNV5tvJaYDwMOyQ
 ### update Channel status
 PUT localhost:8081/channel/changeStatus/191d4771-0dbb-43ae-ac9a-e9dd647a3f26
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDg5MjY0OTIsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkwMTI4OTIsImlzcyI6IllvdVR1YmUifQ.p3m_postr3wLoUlUYWaS-7Q8R_aUVh_r11-702RZQ_DszDQ_LEj_KM6ssFFM3dnKGXY-Wrbo8Fy1_f-rIFiIlA

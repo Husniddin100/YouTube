@@ -1,21 +1,21 @@
 ### registration for email
 POST localhost:8081/auth/registration
 Content-Type: application/json
-Accept-Language: uz
+Accept-Language: en
 
 {
   "name": "Ali",
   "surname": "ali",
-  "email": "uchanl10@gmail.com",
+  "email": "jamol3904@gmail.com",
   "password": "1234"
 }
 
 ### login
 POST localhost:8081/auth/login
 Content-Type:application/json
-Accept-Language: uz
+Accept-Language: en
 
 {
-  "email": "jamol3904@gmail.com",
+  "email": "admin@gmail.com",
   "password": "1234"
 }

@@ -20,6 +20,11 @@ public class VideoEntity {
     private String id;
     @Column(name = "title")
     private String title;
+    @Column(name = "preview_attach_id")
+    private String previewAttachId;
+    @OneToOne
+    @JoinColumn(name = "preview_attach_id", insertable = false, updatable = false)
+    private AttachEntity previewAttach;
     @Column
     private Integer categoryId;
     @ManyToOne

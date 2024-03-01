@@ -59,6 +59,7 @@ public class SpringSecurityConfig {
                     .requestMatchers("tag/tagList").permitAll()
                     .requestMatchers("email_history/getByEmailPagination").permitAll()
                     .requestMatchers("video_tag/getList/*").permitAll()
+                    .requestMatchers("video_like/create_like").permitAll()
                     .anyRequest()
                     .authenticated();
         });

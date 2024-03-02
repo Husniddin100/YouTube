@@ -23,12 +23,6 @@ public class VideoLikeController {
         return ResponseEntity.ok(videoLikeService.create(dto));
     }
 
-   /* @PreAuthorize("hasRole('USER')")
-    @GetMapping("/userLiked_list")
-    public ResponseEntity<List<VideoLikeInfoDTO>> getLikedVideos() {
-        Integer userId = SpringSecurityUtil.getCurrentUser().getId();
-        List<VideoLikeInfoDTO> result = videoLikeService.getLikedVideos(userId);
-        return ResponseEntity.ok(result);
-    }*/
+
 
 }

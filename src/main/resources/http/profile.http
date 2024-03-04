@@ -1,0 +1,7 @@
+POST localhost:8081/profile/getIdChange_password
+Content-Type: application/json
+S
+{
+  "email": "muhammadabduraimov",
+  "password": "1222",
+}

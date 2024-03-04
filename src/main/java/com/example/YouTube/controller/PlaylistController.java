@@ -41,6 +41,8 @@ public class PlaylistController {
                                          HttpServletRequest request ) {
       Integer id=  HttpRequestUtil.getProfileId(request,ProfileRole.ROLE_USER,ProfileRole.ROLE_ADMIN);
         return ResponseEntity.ok(playlistService.delete(orderNumber,id,languageEnums));
+
+
     }
 
     public ResponseEntity<PageImpl<PlaylistDTO>> filter(@RequestParam(value = "page", defaultValue = "1") Integer page,

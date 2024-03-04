@@ -124,10 +124,12 @@ Optional<ProfileEntity>optional=profileRepository.findByEmailAndPassword(email,p
     profileRepository.updateEmail(entity.getEmail(),emailSendHistoryEntity.getNew_email());
     emailSenderRepository.updateVisible(entity.getEmail());
     }
+
     public EmailSendHistoryEntity searchEmail(String email,LanguageEnums languageEnums){
         Optional<EmailSendHistoryEntity>optional=emailSenderRepository.findByEmail(email);
         if (optional.isPresent()){
             return optional.get();
+
         }
         resourceBundleService.getMessage("email.password.wrong",languageEnums);
         log.warn("Email or Password is wrong {}",email);

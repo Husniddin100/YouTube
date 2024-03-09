@@ -3,6 +3,7 @@ package com.example.YouTube.controller;
 import com.example.YouTube.dto.ChannelDTO;
 import com.example.YouTube.entity.ChannelEntity;
 import com.example.YouTube.enums.ChannelStatus;
+import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.enums.ProfileRole;
 import com.example.YouTube.service.ChannelService;
 import com.example.YouTube.util.SpringSecurityUtil;
@@ -23,49 +24,55 @@ public class ChannelController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
-    public ResponseEntity<ChannelDTO> createChannel(@RequestBody ChannelDTO dto) {
-        return ResponseEntity.ok(channelService.createChannel(dto));
+    public ResponseEntity<ChannelDTO> createChannel(@RequestBody ChannelDTO dto, @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
+        return ResponseEntity.ok(channelService.createChannel(dto, lang));
     }
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/update/{channelId}")
-    public ResponseEntity<ChannelDTO> updateChannel(@PathVariable String channelId, @RequestBody ChannelDTO dto) {
+    public ResponseEntity<ChannelDTO> updateChannel(@PathVariable String channelId, @RequestBody ChannelDTO dto
+            , @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
         Integer profileId = SpringSecurityUtil.getCurrentUser().getId();
-        return ResponseEntity.ok(channelService.update(channelId, dto, profileId));
+        return ResponseEntity.ok(channelService.update(channelId, dto, profileId, lang));
     }
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/updatePhoto/{channelId}/{photoId}")
-    public ResponseEntity<Boolean> updatePhoto(@PathVariable String channelId, @PathVariable String photoId) {
+    public ResponseEntity<Boolean> updatePhoto(@PathVariable String channelId, @PathVariable String photoId
+            , @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
         Integer profileId = SpringSecurityUtil.getCurrentUser().getId();
-        return ResponseEntity.ok(channelService.updatePhoto(channelId, photoId, profileId));
+        return ResponseEntity.ok(channelService.updatePhoto(channelId, photoId, profileId,lang));
     }
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/updateBanner/{channelId}/{bannerId}")
-    public ResponseEntity<Boolean> updateBanner(@PathVariable String channelId, @PathVariable String bannerId) {
+    public ResponseEntity<Boolean> updateBanner(@PathVariable String channelId, @PathVariable String bannerId
+            , @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
         Integer profileId = SpringSecurityUtil.getCurrentUser().getId();
-        return ResponseEntity.ok(channelService.updateBanner(channelId, bannerId, profileId));
+        return ResponseEntity.ok(channelService.updateBanner(channelId, bannerId, profileId, lang));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getAllPagination")
     public ResponseEntity<PageImpl> getAll(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        return ResponseEntity.ok(channelService.getAll(page, size));
+                                           @RequestParam(value = "size", defaultValue = "10") Integer size
+            , @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
+        return ResponseEntity.ok(channelService.getAll(page, size, lang));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Optional<ChannelEntity>> getById(@PathVariable String id) {
-        return ResponseEntity.ok(channelService.getById(id));
+    public ResponseEntity<Optional<ChannelEntity>> getById(@PathVariable String id
+            , @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
+        return ResponseEntity.ok(channelService.getById(id, lang));
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PutMapping("/changeStatus/{channelId}")
-    public ResponseEntity<Boolean> changeStatus(@PathVariable String channelId) {
+    public ResponseEntity<Boolean> changeStatus(@PathVariable String channelId
+            , @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
         Integer profileId = SpringSecurityUtil.getCurrentUser().getId();
         ProfileRole role = SpringSecurityUtil.getCurrentUser().getRole();
-        return ResponseEntity.ok(channelService.changeStatus(channelId, profileId, role));
+        return ResponseEntity.ok(channelService.changeStatus(channelId, profileId, role, lang));
     }
 }

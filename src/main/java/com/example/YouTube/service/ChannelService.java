@@ -3,6 +3,7 @@ package com.example.YouTube.service;
 import com.example.YouTube.dto.ChannelDTO;
 import com.example.YouTube.entity.ChannelEntity;
 import com.example.YouTube.enums.ChannelStatus;
+import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.enums.ProfileRole;
 import com.example.YouTube.exp.AppBadException;
 import com.example.YouTube.repository.ChannelRepository;
@@ -18,11 +19,13 @@ import java.util.Optional;
 public class ChannelService {
     @Autowired
     private ChannelRepository channelRepository;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
-    public ChannelDTO createChannel(ChannelDTO dto) {
+    public ChannelDTO createChannel(ChannelDTO dto, LangEnum lang) {
         Optional<ChannelEntity> optional = channelRepository.findId(dto.getProfileId());
         if (optional.isPresent()) {
-            throw new AppBadException("you have already created a channel");
+            throw new AppBadException(resourceBundleService.getMessage("you.have.already.created.a.channel", lang));
         }
         ChannelEntity entity = new ChannelEntity();
         entity.setName(dto.getName());
@@ -37,15 +40,15 @@ public class ChannelService {
         return dto;
     }
 
-    public ChannelDTO update(String channelId, ChannelDTO dto, Integer profileId) {
+    public ChannelDTO update(String channelId, ChannelDTO dto, Integer profileId, LangEnum lang) {
         Optional<ChannelEntity> optional = channelRepository.findById(channelId);
         if (optional.isEmpty()) {
-            throw new AppBadException("channel not found");
+            throw new AppBadException(resourceBundleService.getMessage("channel.not.found",lang));
         }
         // check channel owner
         Optional<ChannelEntity> checkOwner = channelRepository.findOwner(profileId, channelId);
         if (checkOwner.isEmpty()) {
-            throw new AppBadException("You are not the owner of the channel");
+            throw new AppBadException(resourceBundleService.getMessage("You.are.not.the.owner.of.the.channel",lang));
         }
         ChannelEntity entity = optional.get();
         entity.setName(dto.getName());
@@ -54,15 +57,15 @@ public class ChannelService {
         return dto;
     }
 
-    public boolean updatePhoto(String channelId, String photoId, Integer profileId) {
+    public boolean updatePhoto(String channelId, String photoId, Integer profileId, LangEnum lang) {
         Optional<ChannelEntity> optional = channelRepository.findById(channelId);
         if (optional.isEmpty()) {
-            throw new AppBadException("channel not found");
+            throw new AppBadException(resourceBundleService.getMessage("channel.not.found",lang));
         }
         // check channel owner
         Optional<ChannelEntity> checkOwner = channelRepository.findOwner(profileId, channelId);
         if (checkOwner.isEmpty()) {
-            throw new AppBadException("You are not the owner of the channel");
+            throw new AppBadException(resourceBundleService.getMessage("You.are.not.the.owner.of.the.channel",lang));
         }
         ChannelEntity entity = optional.get();
         entity.setPhotoId(photoId);
@@ -70,15 +73,15 @@ public class ChannelService {
         return true;
     }
 
-    public Boolean updateBanner(String channelId, String bannerId, Integer profileId) {
+    public Boolean updateBanner(String channelId, String bannerId, Integer profileId, LangEnum lang) {
         Optional<ChannelEntity> optional = channelRepository.findById(channelId);
         if (optional.isEmpty()) {
-            throw new AppBadException("channel not found");
+            throw new AppBadException(resourceBundleService.getMessage("channel.not.found",lang));
         }
         // check channel owner
         Optional<ChannelEntity> checkOwner = channelRepository.findOwner(profileId, channelId);
         if (checkOwner.isEmpty()) {
-            throw new AppBadException("You are not the owner of the channel");
+            throw new AppBadException(resourceBundleService.getMessage("You.are.not.the.owner.of.the.channel",lang));
         }
         ChannelEntity entity = optional.get();
         entity.setBannerId(bannerId);
@@ -86,7 +89,7 @@ public class ChannelService {
         return true;
     }
 
-    public PageImpl getAll(Integer page, Integer size) {
+    public PageImpl getAll(Integer page, Integer size, LangEnum lang) {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
 
         Pageable paging = PageRequest.of(page - 1, size, sort);
@@ -102,25 +105,25 @@ public class ChannelService {
         return new PageImpl<>(dtoList, paging, totalElements);
     }
 
-    public Optional<ChannelEntity> getById(String id) {
+    public Optional<ChannelEntity> getById(String id, LangEnum lang) {
         Optional<ChannelEntity> optional = channelRepository.findById(id);
         if (optional.isEmpty()) {
-            throw new AppBadException("channel not found");
+            throw new AppBadException(resourceBundleService.getMessage("channel.not.found",lang));
         }
         return optional;
     }
 
-    public Boolean changeStatus(String channelId, Integer profileId, ProfileRole role) {
+    public Boolean changeStatus(String channelId, Integer profileId, ProfileRole role, LangEnum lang) {
         Optional<ChannelEntity> optional = channelRepository.findById(channelId);
         if (optional.isEmpty()) {
-            throw new AppBadException("channel not found");
-        }
+            throw new AppBadException(resourceBundleService.getMessage("channel.not.found",lang));
+            }
         // check role admin
         if (!role.equals(ProfileRole.ROLE_ADMIN)) {
             Optional<ChannelEntity> checkOwner = channelRepository.findOwner(profileId, channelId);
             // check channel owner
             if (checkOwner.isEmpty()) {
-                throw new AppBadException("You are not the owner of the channel");
+                throw new AppBadException(resourceBundleService.getMessage("You.are.not.the.owner.of.the.channel",lang));
             }
         }
         ChannelEntity entity = optional.get();
@@ -132,15 +135,16 @@ public class ChannelService {
         channelRepository.save(entity);
         return true;
     }
-        public ChannelDTO toDTO (ChannelEntity entity){
-            ChannelDTO dto = new ChannelDTO();
-            dto.setName(entity.getName());
-            dto.setDescription(entity.getDescription());
-            dto.setPhotoId(entity.getPhotoId());
-            dto.setStatus(entity.getStatus());
-            dto.setBannerId(entity.getBannerId());
-            dto.setProfileId(entity.getProfileId());
-            dto.setSubscriptionCount(entity.getSubscriptionCount());
-            return dto;
-        }
+
+    public ChannelDTO toDTO(ChannelEntity entity) {
+        ChannelDTO dto = new ChannelDTO();
+        dto.setName(entity.getName());
+        dto.setDescription(entity.getDescription());
+        dto.setPhotoId(entity.getPhotoId());
+        dto.setStatus(entity.getStatus());
+        dto.setBannerId(entity.getBannerId());
+        dto.setProfileId(entity.getProfileId());
+        dto.setSubscriptionCount(entity.getSubscriptionCount());
+        return dto;
+    }
 }

@@ -22,7 +22,4 @@ public class VideoLikeController {
     public ResponseEntity<VideoLikeDTO> create(@RequestBody VideoLikeDTO dto) {
         return ResponseEntity.ok(videoLikeService.create(dto));
     }
-
-
-
 }

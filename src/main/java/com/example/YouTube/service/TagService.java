@@ -2,9 +2,9 @@ package com.example.YouTube.service;
 
 import com.example.YouTube.dto.TagDTO;
 import com.example.YouTube.entity.TagEntity;
+import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.exp.AppBadException;
 import com.example.YouTube.repository.TagRepository;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,10 @@ import java.util.Optional;
 public class TagService {
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
-    public TagDTO createTag(TagDTO dto) {
+    public TagDTO createTag(TagDTO dto, LangEnum lang) {
         TagEntity entity = new TagEntity();
         if (!dto.getName().startsWith("#")) {
             entity.setName("#" + dto.getName());
@@ -33,10 +35,10 @@ public class TagService {
         return dto;
     }
 
-    public Boolean updateTag(Integer id, TagDTO dto) {
+    public Boolean updateTag(Integer id, TagDTO dto, LangEnum lang) {
         Optional<TagEntity> optional = tagRepository.findById(id);
         if (optional.isEmpty()) {
-            throw new AppBadException("tag not found");
+            throw new AppBadException(resourceBundleService.getMessage("tag.not.found",lang));
         }
         TagEntity entity = optional.get();
         if (!dto.getName().startsWith("#")) {
@@ -48,10 +50,10 @@ public class TagService {
         return true;
     }
 
-    public Boolean deleteTag(Integer id) {
+    public Boolean deleteTag(Integer id, LangEnum lang) {
         Optional<TagEntity> optional = tagRepository.findById(id);
         if (optional.isEmpty()) {
-            throw new AppBadException("tag not found");
+            throw new AppBadException(resourceBundleService.getMessage("tag.not.found",lang));
         }
         tagRepository.deleteById(id);
         return true;

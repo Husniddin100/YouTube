@@ -4,6 +4,7 @@ import com.example.YouTube.dto.TagShortDTO;
 import com.example.YouTube.dto.VideoTagDTO;
 import com.example.YouTube.dto.VideoTagShortInfoDTO;
 import com.example.YouTube.entity.VideoTagEntity;
+import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.exp.AppBadException;
 import com.example.YouTube.repository.TagRepository;
 import com.example.YouTube.repository.VideoRepository;
@@ -24,16 +25,18 @@ public class VideoTagService {
     private VideoTagRepository videoTagRepository;
     @Autowired
     private VideoRepository videoRepository;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
-    public VideoTagDTO create(VideoTagDTO dto) {
+    public VideoTagDTO create(VideoTagDTO dto, LangEnum lang) {
         VideoTagEntity entity = new VideoTagEntity();
 
         if (!tagRepository.existsById(dto.getTagId())) {
-            throw new AppBadException("tag not found");
+            throw new AppBadException(resourceBundleService.getMessage("tag.not.found",lang));
         }
 
         if (!videoRepository.existsById(dto.getVideoId())) {
-            throw new AppBadException("video not found");
+            throw new AppBadException(resourceBundleService.getMessage("video.not.found",lang));
         }
 
         entity.setVideoId(dto.getVideoId());
@@ -50,15 +53,15 @@ public class VideoTagService {
         return videotagDTO;
     }
 
-    public Boolean delete(VideoTagDTO dto) {
+    public Boolean delete(VideoTagDTO dto, LangEnum lang) {
         int result = videoTagRepository.deleteByVideoId(dto.getVideoId(), dto.getTagId());
         if (result == 0) {
-            throw new AppBadException("error deleted");
+            throw new AppBadException(resourceBundleService.getMessage("error.deleted",lang));
         }
         return true;
     }
 
-    public List<VideoTagShortInfoDTO> getAllList(String videoId) {
+    public List<VideoTagShortInfoDTO> getAllList(String videoId, LangEnum lang) {
         List<VideoTagEntity> entityList = videoTagRepository.findByVideoId(videoId);
 
         List<VideoTagShortInfoDTO> dtoList = new ArrayList<>();

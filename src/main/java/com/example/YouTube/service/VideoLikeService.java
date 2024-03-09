@@ -1,11 +1,8 @@
 package com.example.YouTube.service;
 
 import com.example.YouTube.dto.*;
-import com.example.YouTube.entity.AttachEntity;
-import com.example.YouTube.entity.ChannelEntity;
-import com.example.YouTube.entity.VideoEntity;
 import com.example.YouTube.entity.VideoLikeEntity;
-import com.example.YouTube.enums.VideoLikeType;
+import com.example.YouTube.enums.LangEnum;
 import com.example.YouTube.exp.AppBadException;
 import com.example.YouTube.repository.VideoLikeRepository;
 import com.example.YouTube.repository.VideoRepository;
@@ -14,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -26,20 +21,22 @@ public class VideoLikeService {
     private VideoLikeRepository videoLikeRepository;
     @Autowired
     private VideoRepository videoRepository;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
-    public VideoLikeDTO create(VideoLikeDTO dto) {
+    public VideoLikeDTO create(VideoLikeDTO dto, LangEnum lang) {
         Optional<Boolean> findVideo = videoRepository.findByVideoId(dto.getVideoId());
         if (findVideo.isEmpty()) {
-            throw new AppBadException("video not found");
+            throw new AppBadException(resourceBundleService.getMessage("video.not.found", lang));
         }
         Optional<Boolean> optional = videoLikeRepository.findByVideoLikedProfile(dto.getVideoId(), dto.getProfileId(), dto.getType());
         if (optional.isPresent()) {
-            remove(dto.getVideoId(), dto.getProfileId());
+            remove(dto.getVideoId(), dto.getProfileId(), lang);
             return dto;
         }
         Optional<Boolean> optional1 = videoLikeRepository.findByVideoIdAndProfileId(dto.getVideoId(), dto.getProfileId());
         if (optional1.isPresent()) {
-            remove(dto.getVideoId(), dto.getProfileId());
+            remove(dto.getVideoId(), dto.getProfileId(), lang);
         }
 
         VideoLikeEntity entity = new VideoLikeEntity();
@@ -55,10 +52,10 @@ public class VideoLikeService {
 
     }
 
-    public Boolean remove(String videoId, Integer profileId) {
+    public Boolean remove(String videoId, Integer profileId, LangEnum lang) {
         Optional<Boolean> optional = videoLikeRepository.findByVideoIdAndProfileId(videoId, profileId);
         if (optional.isEmpty()) {
-            throw new AppBadException("the video has not been liked");
+            throw new AppBadException(resourceBundleService.getMessage("the.video.has.not.been.liked", lang));
         }
         videoLikeRepository.deleteLike(videoId, profileId);
         return true;

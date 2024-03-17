@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class VideoShortDTO {
     private String id;
-    private String name;
+    private String title;
     private ChannelShortInfoDTO channel;
     private Double duration;
 }

@@ -40,6 +40,7 @@ public class VideoService {
         entity.setViewCount(dto.getViewCount());
         entity.setShareCount(dto.getShareCount());
         entity.setDescription(dto.getDescription());
+        entity.setChannelId(dto.getChannel().getId());
         videoRepository.save(entity);
 
         dto.setId(entity.getId());

@@ -22,6 +22,14 @@ public class VideoLikeController {
     @PostMapping("/create_like")
     public ResponseEntity<VideoLikeDTO> create(@RequestBody VideoLikeDTO dto,
                                                @RequestHeader(value = "Accept-Language", defaultValue = "uz") LangEnum lang) {
-        return ResponseEntity.ok(videoLikeService.create(dto,lang));
+        return ResponseEntity.ok(videoLikeService.create(dto, lang));
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/getLikeVideoList")
+    public ResponseEntity<List<VideoLikeInfoDTO>> getLikeVideoList() {
+        Integer profileId = SpringSecurityUtil.getCurrentUser().getId();
+        List<VideoLikeInfoDTO> list = videoLikeService.getLikedVideos(profileId);
+        return ResponseEntity.ok(list);
     }
 }

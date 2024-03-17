@@ -1,8 +1,11 @@
 package com.example.YouTube.service;
 
 import com.example.YouTube.dto.*;
+import com.example.YouTube.entity.ChannelEntity;
+import com.example.YouTube.entity.VideoEntity;
 import com.example.YouTube.entity.VideoLikeEntity;
 import com.example.YouTube.enums.LangEnum;
+import com.example.YouTube.enums.VideoLikeType;
 import com.example.YouTube.exp.AppBadException;
 import com.example.YouTube.repository.VideoLikeRepository;
 import com.example.YouTube.repository.VideoRepository;
@@ -11,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -60,19 +65,38 @@ public class VideoLikeService {
         videoLikeRepository.deleteLike(videoId, profileId);
         return true;
     }
-    // tugatilmagan
-/*
+
     public List<VideoLikeInfoDTO> getLikedVideos(Integer profileId) {
         List<VideoLikeEntity> liked = videoLikeRepository.findAllByProfileIdAndLikeTypeOrderByCreatedDate(profileId, VideoLikeType.LIKE);
-
         List<VideoLikeInfoDTO> result = new ArrayList<>();
         for (VideoLikeEntity videoLikeEntity : liked) {
             result.add(getVideoLikeInfo(videoLikeEntity));
         }
-
         return result;
     }
-*/
+
+    private VideoLikeInfoDTO getVideoLikeInfo(VideoLikeEntity videoLikeEntity) {
+        VideoLikeInfoDTO dto = new VideoLikeInfoDTO();
+        dto.setId(videoLikeEntity.getId());
+        dto.setVideoShortDTO(getVideoShortInfo(videoLikeEntity.getVideo()));
+        return dto;
+    }
+
+    private VideoShortDTO getVideoShortInfo(VideoEntity entity) {
+        VideoShortDTO dto = new VideoShortDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setChannel(getChannelShortInfo(entity.getChannel()));
+        dto.setDuration(entity.getAttach().getDuration());
+        return dto;
+    }
+
+    private ChannelShortInfoDTO getChannelShortInfo(ChannelEntity channel) {
+        ChannelShortInfoDTO dto = new ChannelShortInfoDTO();
+        dto.setId(channel.getId());
+        dto.setName(channel.getName());
+        return dto;
+    }
 
 
 }

@@ -3,11 +3,11 @@ POST localhost:8081/video_like/create_like
 Content-Type: application/json
 
 {
-  "videoId": "1c3a5bf9-4278-4748-abd3-2aee91ec292f",
+  "videoId": "2a136692-8ae4-4eb1-ad1c-84f7ef0aa5df",
   "profileId": 5,
   "type": "LIKE"
 }
 
 ### get list
-GET localhost:8081/video_like/userLiked_list
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MDkyNzU2NTYsImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MDkzNjIwNTYsImlzcyI6IllvdVR1YmUifQ.oTzhYHWshacVMWSRiLudUUS09cTqiglchhdXof2xFkCAlKzG_-ewrrrJLfC0TE3l7tBzv-nzJTznmYRqjbPlTA
+GET localhost:8081/video_like/getLikeVideoList
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MTA2Njc1MzksImVtYWlsIjoiamFtb2wzOTA0QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE3MTA3NTM5MzksImlzcyI6IllvdVR1YmUifQ.4g4oxKXrMPd5IY3KhZverlDMxO9001t_4kpz-XL1KpoieHRChpI28a2f_Sf92wQX2qniq4z8YQVJogHSU8PU_w

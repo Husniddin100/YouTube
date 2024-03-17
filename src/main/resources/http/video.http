@@ -9,6 +9,8 @@ Content-Type:application/json
   "title": "test title",
   "typeStatus": "SHORT",
   "attachId": "f30a45d8-cd00-4bc1-ae77-980eab3331af",
-  "categoryId": 1
-
+  "categoryId": 1,
+  "channel": {
+    "id": "2fddcf56-af91-47a9-8c38-3ed21702f69e"
+  }
 }

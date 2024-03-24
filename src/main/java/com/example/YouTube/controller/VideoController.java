@@ -23,7 +23,6 @@ public class VideoController {
 
         return ResponseEntity.ok(videoService.update(id,dto));
     }
-
     @PutMapping("/incrementViews/{id}")
     public ResponseEntity<?> incrementViewCount(@PathVariable("id") String id) {
         videoService.increaseCount(id);

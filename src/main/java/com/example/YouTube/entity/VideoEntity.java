@@ -49,7 +49,7 @@ public class VideoEntity {
     private Integer shareCount;
     @Column(name = "description")
     private String description;
-    @Column
+    @Column(name = "channelId")
     private String channelId;
     @ManyToOne
     @JoinColumn(name = "chanel", insertable = false, updatable = false)
